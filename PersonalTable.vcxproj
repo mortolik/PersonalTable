@@ -140,9 +140,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="PersonalTable.cpp" />
+    <ClCompile Include="TArrayTable.cpp" />
     <ClCompile Include="TTable.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="TArrayTable.h" />
     <ClInclude Include="TTable.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
