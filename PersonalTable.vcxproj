@@ -142,6 +142,7 @@
     <ClCompile Include="PersonalTable.cpp" />
     <ClCompile Include="TArrayHash.cpp" />
     <ClCompile Include="TArrayTable.cpp" />
+    <ClCompile Include="TBalTreeTable.cpp" />
     <ClCompile Include="THashTable.cpp" />
     <ClCompile Include="TListHash.cpp" />
     <ClCompile Include="TScanTable.cpp" />
@@ -152,6 +153,7 @@
   <ItemGroup>
     <ClInclude Include="TArrayHash.h" />
     <ClInclude Include="TArrayTable.h" />
+    <ClInclude Include="TBalTreeTable.h" />
     <ClInclude Include="THashTable.h" />
     <ClInclude Include="TListHash.h" />
     <ClInclude Include="TScanTable.h" />

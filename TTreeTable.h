@@ -1,16 +1,25 @@
 #pragma once
 #include "TTable.h"
 #include <stack>
+#define  H_OK 0
+#define  H_INC 1
+#define  H_DEC -1
+#define  BalRight 1
+#define  BalOK 0
+#define  BalLeft -1
+
 
 
 struct TTreeNode {
 	TRecord rec;
 	TTreeNode* pLeft, * pRight;
+	int bal;
 	TTreeNode(const TRecord& _rec)
 	{
 		rec = _rec;
 		pLeft = nullptr;
 		pRight = nullptr;
+		bal = BalOK;
 	}
 };
 
@@ -32,6 +41,10 @@ public:
 		pCurr = nullptr;
 		pPrev = nullptr;
 		countpos = 0; lvl = 0;
+	}
+	~TTreeTable()
+	{
+		DeleteTreeTab(pRoot);
 	}
 
 	bool Find(TKey key)
@@ -160,22 +173,6 @@ public:
 		dataCount--;
 		return true;
 	}
-
-	void Reset()
-	{
-		while (!st.empty())
-		{
-			st.pop();
-		}
-		pCurr = pRoot;
-		while (pCurr != nullptr)
-		{
-			st.push(pCurr);
-			pCurr = pCurr->pLeft;
-		}
-		pCurr = st.top();
-		countpos = 0;
-	}
 	void GoNext()
 	{
 		if (pCurr == nullptr || IsEnd())
@@ -202,6 +199,22 @@ public:
 		}
 		countpos++;
 	}
+
+	void Reset()
+	{
+		while (!st.empty())
+		{
+			st.pop();
+		}
+		pCurr = pRoot;
+		while (pCurr != nullptr)
+		{
+			st.push(pCurr);
+			pCurr = pCurr->pLeft;
+		}
+		pCurr = st.top();
+		countpos = 0;
+	}
 	bool IsEnd()
 	{
 		return countpos == dataCount;
@@ -215,10 +228,6 @@ public:
 			DeleteTreeTab(pNode->pRight);
 			delete pNode;
 		}
-	}
-	~TTreeTable()
-	{
-		DeleteTreeTab(pRoot);
 	}
 
 	void PrintTable(std::ostream& os, TTreeNode* pNode)
@@ -237,16 +246,13 @@ public:
 
 		}
 	}
-
-	bool IsFull() const { return false; };
-	TRecord GetCurrentRecord() { return pCurr->rec; };
 	void SetCurrentRecord(TRecord record)
 	{
 		pCurr->rec.key = record.key;
 		pCurr->rec.value = record.value;
 	};
-
-
+	bool IsFull() const { return false; };
+	TRecord GetCurrentRecord() { return pCurr->rec; };
 	TKey GetRightKey(TKey key)
 	{
 		Find(key);

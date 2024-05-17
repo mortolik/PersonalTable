@@ -8,6 +8,11 @@ protected:
 	int Curr_pos, step, Free_pos, size;
 public:
 
+	~TArrayHash()
+	{
+		delete[] pRecs;
+	}
+
 	TArrayHash(int _size = MAX_SIZE, int _step = 3)
 	{
 		if (_size > MAX_SIZE)
@@ -25,11 +30,6 @@ public:
 			pRecs[i] = Empty;
 		}
 	}
-	~TArrayHash()
-	{
-		delete[] pRecs;
-	}
-
 	void Reset()
 	{
 		int Curr_pos = 0;
@@ -49,15 +49,6 @@ public:
 		{
 			return false;
 		}
-	}
-	void GoNext()
-	{
-		for (; Curr_pos < size; Curr_pos++)
-		{
-			if (pRecs[Curr_pos] != Empty && pRecs[Curr_pos] != Del)
-				break;
-		}
-
 	}
 
 	bool Find(TKey key)
@@ -83,6 +74,16 @@ public:
 
 		}
 		return false;
+
+	}
+
+	void GoNext()
+	{
+		for (; Curr_pos < size; Curr_pos++)
+		{
+			if (pRecs[Curr_pos] != Empty && pRecs[Curr_pos] != Del)
+				break;
+		}
 
 	}
 	bool IsFull() const
@@ -128,6 +129,8 @@ public:
 		return true;
 	}
 
+	int GetSize() { return size; }
+
 	virtual int GetCurrentPos() { return Curr_pos; }
 	virtual void SetCurrentPos(int _curPos)
 	{
@@ -154,6 +157,5 @@ public:
 		}
 		pRecs[Curr_pos] = record;
 	}
-	int GetSize() { return size; }
 };
 

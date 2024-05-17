@@ -25,8 +25,6 @@ public:
 		return *this;
 	}
 };
-
-//Реализация
 inline bool TScanTable::Find(TKey key)
 {
 	for (int i = 0; i < dataCount; i++)

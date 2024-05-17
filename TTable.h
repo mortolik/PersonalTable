@@ -7,8 +7,8 @@ typedef std::string TValue;
 constexpr auto MAX_SIZE = 999;
 struct TRecord
 {
-	TKey key;     //Ключ
-	TValue value; //Запись
+	TKey key;     
+	TValue value; 
 
 	TRecord()
 	{
@@ -28,17 +28,17 @@ struct TRecord
 		value = other.value;
 		return *this;
 	}
-
-	void output()
-	{
-		std::cout << "( " << key << "  " << value << " )" << std::endl;
-	}
 	bool operator == (TRecord other)
 	{
 		if (this->value == other.value)
 			return true;
 		else
 			return false;
+	}
+
+	void output()
+	{
+		std::cout << "( " << key << "  " << value << " )" << std::endl;
 	}
 	bool operator != (const TRecord& other)
 	{
@@ -49,7 +49,7 @@ struct TRecord
 class TTable
 {
 protected:
-	int dataCount;   //Количество записей в таблице на данный момент
+	int dataCount;   
 	int efficiency;
 
 public:
@@ -60,18 +60,15 @@ public:
 	void ClearEfficiency() { efficiency = 0; }
 
 	bool IsEmpty() const { return dataCount == 0; }
-	virtual bool IsFull() const = 0;
-
-	virtual bool Find(TKey) = 0;                           //Поиск записи в таблице по ключу
-	virtual bool Insert(TRecord record) = 0;               //Вставка записи в таблицу
-	virtual bool Delete(TKey key) = 0;                     //Удаление записиси из таблицы
-
-	virtual void GoNext() = 0;
-	virtual void Reset() = 0;
+	virtual bool Find(TKey) = 0;
 	virtual bool IsEnd() = 0;
-
-	virtual TRecord GetCurrentRecord() = 0;                //Возвращает текущую запись с ключём
-	virtual void SetCurrentRecord(TRecord record) = 0;     //Устанавливает текущую запись с ключём????
+	virtual bool Insert(TRecord record) = 0;
+	virtual bool IsFull() const = 0;
+	virtual void Reset() = 0;
+	virtual bool Delete(TKey key) = 0; 
+	virtual void GoNext() = 0;
+	virtual TRecord GetCurrentRecord() = 0;                
+	virtual void SetCurrentRecord(TRecord record) = 0;     
 
 
 };

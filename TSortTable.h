@@ -6,14 +6,14 @@ enum SortType { Merge, Bubble, Quick };
 class TSortTable :public TScanTable
 {
 private:
-	void BubbleSort();                        //Сортировка пузырьком
-	void QuickSort(int first, int last);      //Быстрая сортировка
-	void MergeSort(int left, int right);      //Сортировка слиянием
-	void Merge(int left, int mid, int right); //Функция объединения 2 частей массива
+	void BubbleSort();                        
+	void QuickSort(int first, int last);      
+	void MergeSort(int left, int right);      
+	void Merge(int left, int mid, int right); 
 
 public:
 	TSortTable(int _size = MAX_SIZE) :TScanTable(_size) {};
-	void ScanToSort(TScanTable& table, SortType sortType); //Преобразование типа
+	void ScanToSort(TScanTable& table, SortType sortType);
 
 	bool Find(TKey key);
 	bool Insert(TRecord record);
@@ -37,9 +37,7 @@ public:
 		return *this;
 	}
 };
-
-//Реализация
-inline void TSortTable::QuickSort(int first, int last)
+ inline void TSortTable::QuickSort(int first, int last)
 {
 	if (this->IsEmpty()) return;
 
