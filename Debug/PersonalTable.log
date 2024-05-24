@@ -1,12 +1,6 @@
 ﻿  PersonalTable.cpp
-  TArrayHash.cpp
-  TArrayTable.cpp
+C:\Users\User\source\repos\PersonalTable\PersonalTable\PersonalTable.cpp(23,7): warning C4101: Line: неиспользованная локальная переменная
   TBalTreeTable.cpp
-  THashTable.cpp
-  TListHash.cpp
-  TScanTable.cpp
-  TSortTable.cpp
-  TTable.cpp
-  TTreeTable.cpp
   Создание кода...
+C:\Users\User\source\repos\PersonalTable\PersonalTable\TBalTreeTable.h(270): warning C4715: TBalTreeTable::Insert: значение возвращается не при всех путях выполнения
   PersonalTable.vcxproj -> C:\Users\User\source\repos\PersonalTable\Debug\PersonalTable.exe

@@ -1,4 +1,5 @@
 #pragma once
+#define _treetable_h
 #include "TTable.h"
 #include <stack>
 #define  H_OK 0
@@ -245,6 +246,15 @@ public:
 			lvl--;
 
 		}
+	}
+	void Draw(void)
+	{
+		cout << "Table printing" << endl;
+		PrintTable(cout, pRoot);
+	}
+	TTreeNode* GetpRoot()
+	{
+		return pRoot;
 	}
 	void SetCurrentRecord(TRecord record)
 	{

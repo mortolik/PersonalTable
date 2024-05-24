@@ -134,6 +134,7 @@ protected:
 	}
 	int RemoveMin(TTreeNode*& pNode)
 	{
+		/*
 		int res = H_OK;
 		if (pNode->pLeft == nullptr)
 		{
@@ -151,16 +152,36 @@ protected:
 
 
 		}
+		return res;*/
+		int res = H_OK;
+		if (!pNode) {
+			return res; // ???? pNode ???????, ????????? ???????
+		}
+
+		TTreeNode* rightNode = pNode->pRight;
+		if (!pNode->pLeft)
+		{
+			pNode = rightNode;
+			res = H_DEC;
+		}
+		else
+		{
+			res = RemoveMin(pNode->pLeft);
+			if (res != H_OK)
+			{
+				res = Right_Balance(pNode);
+			}
+		}
 		return res;
 	}
 	TTreeNode* FindMin(TTreeNode* pNode) {
 		if (pNode == nullptr) {
-			return nullptr; 
+			return nullptr; // ?????? ??????
 		}
 		while (pNode->pLeft != nullptr) {
-			pNode = pNode->pLeft; 
+			pNode = pNode->pLeft; // ????????? ?????, ???? ?? ?????? ?? ?????? ?????? ????
 		}
-		return pNode; 
+		return pNode; // ?????????? ???? ? ??????????? ??????
 	}
 	int DeleteRec(TTreeNode*& pNode, TKey key)
 	{
@@ -174,13 +195,13 @@ protected:
 			{
 				res = Right_Balance(pNode);
 			}
-			else if (pNode->rec.key < key)
+		}
+		else if (pNode->rec.key < key)
+		{
+			res = DeleteRec(pNode->pRight, key);
+			if (res != H_OK)
 			{
-				res = DeleteRec(pNode->pRight, key);
-				if (res != H_OK)
-				{
-					res = Left_Balance(pNode);
-				}
+				res = Left_Balance(pNode);
 			}
 		}
 		else
@@ -214,11 +235,16 @@ protected:
 				l = pNode->pLeft;
 				r = pNode->pRight;
 				TTreeNode* min = FindMin(r);
-				res = RemoveMin(min);
+				//TTreeNode* tmp = min;
+				int min_key = min->rec.key;
 				pNode->rec = min->rec;
+				res = RemoveMin(r);
+
 				delete min;
+				//delete tmp;
 				pNode->pLeft = l;
 				pNode->pRight = r;
+
 				if (res != H_OK)
 				{
 					res = Left_Balance(pNode);

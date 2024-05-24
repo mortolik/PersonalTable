@@ -1,7 +1,7 @@
 #pragma once
 #include<string>
 #include<iostream>
-
+using namespace std;
 typedef int TKey;
 typedef std::string TValue;
 constexpr auto MAX_SIZE = 999;
@@ -44,6 +44,7 @@ struct TRecord
 	{
 		return !(*this == other);
 	}
+	void Print(ostream& os) { os << key << " " << value; }
 };
 
 class TTable
@@ -54,6 +55,7 @@ protected:
 
 public:
 	TTable() { dataCount = 0; efficiency = 0; };
+	virtual ~TTable() { };
 
 	int GetDataCount() const { return dataCount; }
 	int GetEfficiency() const { return efficiency; }
@@ -67,9 +69,18 @@ public:
 	virtual void Reset() = 0;
 	virtual bool Delete(TKey key) = 0; 
 	virtual void GoNext() = 0;
-	virtual TRecord GetCurrentRecord() = 0;                
-	virtual void SetCurrentRecord(TRecord record) = 0;     
+	virtual TRecord GetCurrentRecord() = 0;
 
-
+	//virtual TValue GetValue(void) const = 0;
+	//virtual TKey GetKey(void) const = 0;
+	virtual void SetCurrentRecord(TRecord record) = 0;   
+	friend ostream& operator<<(ostream& os, TTable& tab) {
+		cout << "Table printing" << endl;
+		for (tab.Reset(); !tab.IsEnd(); tab.GoNext()) {
+			os << " Key: " << tab.GetCurrentRecord().key << " Val: " << tab.GetCurrentRecord().value << endl;
+			tab.efficiency++;
+		}
+		return os;
+	}
 };
 
