@@ -71,8 +71,6 @@ public:
 	virtual void GoNext() = 0;
 	virtual TRecord GetCurrentRecord() = 0;
 
-	//virtual TValue GetValue(void) const = 0;
-	//virtual TKey GetKey(void) const = 0;
 	virtual void SetCurrentRecord(TRecord record) = 0;   
 	friend ostream& operator<<(ostream& os, TTable& tab) {
 		cout << "Table printing" << endl;

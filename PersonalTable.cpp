@@ -20,7 +20,6 @@ int DataCount = 0, MemSize;
 
 void TableGenerator(TTabMode mode) {
 	int  MaxKey;
-	char Line[100];
 	cout << "Input the record's number - ";
 	cin >> DataCount;
 	cout << "Input the Maximum Key  - ";
@@ -102,7 +101,7 @@ int TableProcessor(TTabMode mode) {
 			pTab->ClearEfficiency();
 			if ((mode != TREE_TABLE) && (mode != BALL_TREE_TABLE))
 			{
-				cout << *pTab; // Table printing
+				cout << *pTab; 
 			}
 			else
 				((TTreeTable*)pTab)->Draw();

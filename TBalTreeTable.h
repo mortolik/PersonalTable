@@ -32,7 +32,7 @@ protected:
 				pNode->pLeft = p2->pRight;
 				p2->pLeft = p1;
 				p2->pRight = pNode;
-				if (p2->bal = BalRight)
+				if (p2->bal == BalRight)
 				{
 					p1->bal = BalLeft;
 					pNode->bal = BalOK;
@@ -112,7 +112,7 @@ protected:
 		if (pNode == nullptr)
 		{
 			pNode = new TTreeNode(rec);
-			res = H_INC; dataCount++;//
+			res = H_INC; dataCount++;
 
 		}
 		else if (pNode->rec.key > rec.key)
@@ -148,9 +148,6 @@ protected:
 			{
 				res = Right_Balance(pNode);
 			}
-
-
-
 		}
 		return res;*/
 		int res = H_OK;
@@ -257,6 +254,7 @@ protected:
 	}
 
 public:
+	TBalTreeTable() :TTreeTable() {};
 	bool Insert(TRecord rec)
 	{
 		bool res = Find(rec.key);
