@@ -1,5 +1,6 @@
 ﻿#define _CRT_SECURE_NO_WARNINGS
 #include<iostream>
+#include<fstream>
 #include<string>
 #include<iomanip>
 #include "TSortTable.h"
@@ -44,15 +45,38 @@ void TableGenerator(TTabMode mode) {
 	case BALL_TREE_TABLE:
 		pTab = new TBalTreeTable();
 	}
+
 	pKeys = new int[MemSize];
 	pVals = new string[MemSize];
-	for (int i = 0; i < DataCount; i++) {
-		pKeys[i] = rand() % MaxKey;
-		pVals[i] = "rec" + to_string(pKeys[i]);
-		TRecord tmp(pKeys[i], pVals[i]);
-		pTab->Insert(tmp);
+
+	cout << "1 - Random, 2 - For 0 to the record's number:  ";
+	int ManualOrAuto;
+	cin >> ManualOrAuto;
+	switch (ManualOrAuto)
+	{
+	case 1:
+		for (int i = 0; i < DataCount; i++) {
+			pKeys[i] = rand() % MaxKey;
+			pVals[i] = "rec" + to_string(pKeys[i]);
+			TRecord tmp(pKeys[i], pVals[i]);
+			pTab->Insert(tmp);
+
+			pTab->ClearEfficiency();
+
+		}
+	case 2:
+		for (int i = 0; i < DataCount; i++)
+		{
+			pKeys[i] = i;
+			pVals[i] = "rec" + to_string(i);
+			TRecord tmp(pKeys[i], pVals[i]);
+			pTab->Insert(tmp);
+
+			pTab->ClearEfficiency();
+		}
+	default:
+		break;
 	}
-	pTab->ClearEfficiency();
 }
 
 int TableProcessor(TTabMode mode) {
@@ -60,7 +84,7 @@ int TableProcessor(TTabMode mode) {
 	int key;
 	string rec;
 	while (1) {
-		cout << "0 - New Table, 1 - Find, 2 - Insert, 3 - Delete, 4 - Print, 5 - Exit  ";
+		cout << "0 - New Table, 1 - Find, 2 - Insert, 3 - Delete, 4 - Print, 5 - Exit, 6-console: ";
 		cin >> com;
 		if (com == 0)
 			return 0;
@@ -104,11 +128,31 @@ int TableProcessor(TTabMode mode) {
 				cout << *pTab; 
 			}
 			else
+			{
 				((TTreeTable*)pTab)->Draw();
+			}
+				
+		}
+		if (com == 6)
+		{
+			pTab->ClearEfficiency();
+			if ((mode != TREE_TABLE) && (mode != BALL_TREE_TABLE))
+			{
+				cout << *pTab; 
+			}
+			else
+			{
+				((TTreeTable*)pTab)->DrawConsole();
+			}
+				
 		}
 		if (com == 5)
 		{
 			return 1;
+		}
+		if (com == 7)
+		{
+			pTab->Reset();
 		}
 	}
 

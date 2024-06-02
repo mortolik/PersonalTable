@@ -1,4 +1,7 @@
 #pragma once
+#include <fstream>
+#include <iomanip>
+
 #define _treetable_h
 #include "TTable.h"
 #include <stack>
@@ -8,6 +11,7 @@
 #define  BalRight 1
 #define  BalOK 0
 #define  BalLeft -1
+using namespace std;
 
 
 
@@ -33,57 +37,45 @@ protected:
 	std::stack<TTreeNode*> st;
 	int countpos{}, lvl{};
 
-
 public:
 
+	
 	TTreeTable()
 	{
 		pRoot = nullptr;
 		pCurr = nullptr;
 		pPrev = nullptr;
-		countpos = 0; lvl = 0;
+		//countpos = 0; lvl = 0;
 	}
 	~TTreeTable()
 	{
 		DeleteTreeTab(pRoot);
 	}
 
-	bool Find(TKey key)
-	{
-		if (pCurr != nullptr)
-		{
-			if (pCurr->rec.key == key)
-			{
-				return true;
-			}
-		}
-		pCurr = pRoot; pPrev = nullptr;
-		while (pCurr != nullptr)
+	bool Find(TKey k) {
+		pPrev = NULL;
+		pCurr = pRoot;
+		while (pCurr != NULL)
 		{
 			efficiency++;
-			if (pCurr->rec.key == key) break;
-			else {
+			if (pCurr->rec.key == k) break;
+			else
+			{
 				pPrev = pCurr;
-				if (pCurr->rec.key > key)
+				if (pCurr->rec.key > k)
 				{
 					pCurr = pCurr->pLeft;
 				}
-				else {
-					pCurr = pCurr->pRight;
-				}
+				else pCurr = pCurr->pRight;
+
 			}
 		}
-		if (pCurr != nullptr) {
-			return true;
-		}
-		else {
-			pCurr = pPrev;
-			return false;
-		}
-
+		if (pCurr != NULL) return true;
+		else { pCurr = pPrev; return false; }
 	}
 	bool Insert(TRecord _rec)
 	{
+
 		if (Find(_rec.key))
 		{
 			return false;
@@ -94,14 +86,12 @@ public:
 			if (pRoot == nullptr)
 			{
 				pRoot = newNode;
-
 			}
 			else
 			{
 				if (pCurr->rec.key > _rec.key)
 				{
 					pCurr->pLeft = newNode;
-
 				}
 				else
 				{
@@ -203,18 +193,15 @@ public:
 
 	void Reset()
 	{
-		while (!st.empty())
-		{
-			st.pop();
-		}
-		pCurr = pRoot;
-		while (pCurr != nullptr)
-		{
-			st.push(pCurr);
-			pCurr = pCurr->pLeft;
-		}
-		pCurr = st.top();
+		TTreeNode* pNode = pCurr = pRoot;
+		while (!st.empty()) st.pop();
 		countpos = 0;
+		while (pNode != NULL)
+		{
+			st.push(pNode);
+			pCurr = pNode;
+			pNode = pNode->pLeft;
+		}
 	}
 	bool IsEnd()
 	{
@@ -230,8 +217,29 @@ public:
 			delete pNode;
 		}
 	}
-
-	void PrintTable(std::ostream& os, TTreeNode* pNode)
+	void PrintTable(TTreeNode* pNode, ofstream & fout)
+	{
+		if (pNode != nullptr)
+		{
+			for (int i = 0; i < lvl; i++)
+			{
+				fout << " ";
+			}
+			fout << pNode->rec.key << std::endl;
+			lvl++;
+			PrintTable( pNode->pRight, fout);
+			PrintTable( pNode->pLeft, fout);
+			lvl--;
+		}
+		
+	}
+	void DrawConsole(void)
+	{
+		
+		cout << "Table printing" << endl;
+		PrintTableConsole(pRoot, cout);
+	}
+	void PrintTableConsole(TTreeNode* pNode, ostream& os)
 	{
 		if (pNode != nullptr)
 		{
@@ -241,16 +249,18 @@ public:
 			}
 			os << pNode->rec.key << std::endl;
 			lvl++;
-			PrintTable(os, pNode->pRight);
-			PrintTable(os, pNode->pLeft);
+			PrintTableConsole(pNode->pRight, os);
+			PrintTableConsole(pNode->pLeft, os);
 			lvl--;
-
 		}
+
 	}
 	void Draw(void)
 	{
 		cout << "Table printing" << endl;
-		PrintTable(cout, pRoot);
+		ofstream fout("output.txt");
+		PrintTable(pRoot, fout);
+
 	}
 	TTreeNode* GetpRoot()
 	{
