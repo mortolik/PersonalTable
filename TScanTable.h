@@ -50,37 +50,4 @@ public:
 		this->currentPos = other.currentPos;
 		return *this;
 	}
-};/*
-inline bool TScanTable::Find(TKey key)
-{
-	for (int i = 0; i < dataCount; i++)
-	{
-		efficiency++;
-		if (arr[i].key == key)
-		{
-			currentPos = i;
-			return true;
-		}
-	}
-	currentPos = dataCount;
-	return false;
-}
-
-inline bool TScanTable::Insert(TRecord record)
-{
-	if (IsFull() || Find(record.key)) return false;
-	this->arr[this->dataCount] = record;
-	efficiency++;
-	this->dataCount++;
-	return true;
-}
-
-inline bool TScanTable::Delete(TKey key)
-{
-	if (!Find(key)) return false;
-	arr[currentPos] = arr[dataCount - 1];
-	dataCount--;
-	efficiency++;
-	return true;
-}*/
-
+};

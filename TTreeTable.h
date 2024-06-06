@@ -45,11 +45,17 @@ public:
 		pRoot = nullptr;
 		pCurr = nullptr;
 		pPrev = nullptr;
-		//countpos = 0; lvl = 0;
+		countpos = 0; lvl = 0;
+		dataCount = 0;
 	}
 	~TTreeTable()
 	{
 		DeleteTreeTab(pRoot);
+		pRoot = nullptr;
+		pCurr = nullptr;
+		pPrev = nullptr;
+		countpos = 0; lvl = 0;
+		dataCount = 0;
 	}
 
 	bool Find(TKey k) {
@@ -99,6 +105,7 @@ public:
 				}
 			}
 			dataCount++;
+			efficiency++;
 			return true;
 		}
 	}
@@ -225,7 +232,7 @@ public:
 			{
 				fout << " ";
 			}
-			fout << pNode->rec.key << std::endl;
+			fout << pNode->rec.value << std::endl;
 			lvl++;
 			PrintTable( pNode->pRight, fout);
 			PrintTable( pNode->pLeft, fout);
@@ -247,7 +254,7 @@ public:
 			{
 				os << " ";
 			}
-			os << pNode->rec.key << std::endl;
+			os << pNode->rec.value << std::endl;
 			lvl++;
 			PrintTableConsole(pNode->pRight, os);
 			PrintTableConsole(pNode->pLeft, os);

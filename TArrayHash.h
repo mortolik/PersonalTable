@@ -11,6 +11,10 @@ public:
 	~TArrayHash()
 	{
 		delete[] pRecs;
+		Empty.key = -1;
+		Del.key = -2;
+		Curr_pos = -1;
+		dataCount = 0;
 	}
 
 	TArrayHash(int _size = MAX_SIZE, int _step = 3)
@@ -32,8 +36,7 @@ public:
 	}
 	void Reset()
 	{
-		int Curr_pos = 0;
-		for (; Curr_pos < size; Curr_pos++)
+		for (Curr_pos=0; Curr_pos < size; Curr_pos++)
 		{
 			if (pRecs[Curr_pos] != Empty && pRecs[Curr_pos] != Del)
 				break;
@@ -41,14 +44,7 @@ public:
 	}
 	bool IsEnd()
 	{
-		if (Curr_pos == size)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return Curr_pos == size;
 	}
 
 	bool Find(TKey key)
@@ -66,7 +62,7 @@ public:
 			{
 				Free_pos = Curr_pos;
 			}
-			if (pRecs[Curr_pos] == Empty)
+			if (pRecs[Curr_pos]== Empty)
 			{
 				return false;
 			}
@@ -79,7 +75,7 @@ public:
 
 	void GoNext()
 	{
-		for (; Curr_pos < size; Curr_pos++)
+		for (Curr_pos ++; Curr_pos < size; Curr_pos++)
 		{
 			if (pRecs[Curr_pos] != Empty && pRecs[Curr_pos] != Del)
 				break;
@@ -109,6 +105,7 @@ public:
 			}
 			pRecs[Curr_pos] = rec;
 			dataCount++;
+			efficiency++;
 		}
 		return true;
 	}
@@ -125,6 +122,7 @@ public:
 		{
 			pRecs[Curr_pos] = Del;
 			dataCount--;
+			efficiency++;
 		}
 		return true;
 	}
@@ -156,6 +154,22 @@ public:
 			throw std::exception();
 		}
 		pRecs[Curr_pos] = record;
+	}
+	TArrayHash& operator =(const TArrayHash& other)
+	{
+		delete[] pRecs;
+		size = other.size;
+		step = other.step;
+		pRecs = new TRecord[size];
+		Empty.key = other.Empty.key;
+		Del.key = other.Del.key;
+		Curr_pos = other.Curr_pos;
+		for (int i = 0; i < size; i++)
+		{
+			pRecs[i] = Empty;
+		}
+		dataCount = other.dataCount;
+		return *this;
 	}
 };
 

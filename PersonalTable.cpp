@@ -44,6 +44,7 @@ void TableGenerator(TTabMode mode) {
 		break;
 	case BALL_TREE_TABLE:
 		pTab = new TBalTreeTable();
+		break;
 	}
 
 	pKeys = new int[MemSize];
@@ -60,10 +61,9 @@ void TableGenerator(TTabMode mode) {
 			pVals[i] = "rec" + to_string(pKeys[i]);
 			TRecord tmp(pKeys[i], pVals[i]);
 			pTab->Insert(tmp);
-
 			pTab->ClearEfficiency();
-
 		}
+		break;
 	case 2:
 		for (int i = 0; i < DataCount; i++)
 		{
@@ -71,9 +71,9 @@ void TableGenerator(TTabMode mode) {
 			pVals[i] = "rec" + to_string(i);
 			TRecord tmp(pKeys[i], pVals[i]);
 			pTab->Insert(tmp);
-
 			pTab->ClearEfficiency();
 		}
+		break;
 	default:
 		break;
 	}
